@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projetos FCU · SIGEO Executados | Enel Brasil</title>
+<meta name="description" content="Programações, histórico e localização dos projetos das parceiras Start, Conecta e Engelmig — Enel Brasil Grids · Gestão de Programação">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="assets/enel-brasil-logo.png">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="vendor/leaflet/MarkerCluster.css">
+<link rel="stylesheet" href="vendor/leaflet/MarkerCluster.Default.css">
+<link rel="stylesheet" href="styles.css">
+<script src="vendor/chart.umd.min.js" defer></script>
+<script src="vendor/leaflet/leaflet.js" defer></script>
+<script src="vendor/leaflet/leaflet.markercluster.js" defer></script>
+<script src="vendor/xlsx.full.min.js" defer></script>
+<script src="data/base.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="spectrum"></div>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#inicio"><img src="assets/enel-brasil-logo.png" alt="Enel Brasil"></a>
+    <div class="title">
+      <span class="eyebrow">Enel Brasil · Grids · Gestão de Programação</span>
+      <h1>Projetos FCU · SIGEO Executados</h1>
+      <span class="sub">Start Engenharia · Conecta · Engelmig — programações, histórico e localização</span>
+    </div>
+    <div class="clock" aria-live="off">
+      <div class="clock-time" id="clockTime">--:--:--</div>
+      <div class="clock-date" id="clockDate">—</div>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <a href="#inicio" class="active">Visão geral</a>
+    <a href="#parceiras">Parceiras</a>
+    <a href="#mapa">Mapa</a>
+    <a href="#analises">Análises</a>
+    <a href="#lista">Lista de projetos</a>
+    <span class="grow"></span>
+    <button class="btn ghost" id="btnConsulta">🔎 Consultar</button>
+    <button class="btn ghost" id="btnImport">⬆ Importar Excel</button>
+    <button class="btn primary" id="btnExport">⬇ Exportar Excel</button>
+  </nav>
+</header>
+
+<main>
+  <section id="inicio" class="block">
+    <div class="filters card" id="filters">
+      <div class="f wide"><label>Pesquisa</label><input id="fQ" type="search" placeholder="Projeto, PowerON, equipamento, circuito, descrição…"></div>
+      <div class="f"><label>Parceira</label><select id="fParc"></select></div>
+      <div class="f"><label>Contratada</label><select id="fContr"></select></div>
+      <div class="f"><label>Status programação</label><select id="fStatus"></select></div>
+      <div class="f"><label>Tipo intervenção</label><select id="fTipo"></select></div>
+      <div class="f"><label>Polo</label><select id="fPolo"></select></div>
+      <div class="f"><label>Família (FCU)</label><select id="fFam"></select></div>
+      <div class="f"><label>Região</label><select id="fReg"></select></div>
+      <div class="f"><label>De</label><input id="fDe" type="date"></div>
+      <div class="f"><label>Até</label><input id="fAte" type="date"></div>
+      <div class="f"><label>Localização</label><select id="fLoc"><option value="">Todas</option><option value="1">Com coordenada</option><option value="0">Sem coordenada</option></select></div>
+      <div class="f btns"><button class="btn ghost" id="btnClear">Limpar filtros</button></div>
+    </div>
+    <div class="chips" id="activeChips"></div>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section id="parceiras" class="block">
+    <div class="sec-head"><h2>Parceiras</h2><p>Clique em um cartão para filtrar o painel pela parceira.</p></div>
+    <div class="partners" id="partners"></div>
+  </section>
+
+  <section id="mapa" class="block">
+    <div class="sec-head"><h2>Localização dos projetos</h2><p id="mapInfo">Coordenada do projeto no FCU ou, na falta, do equipamento mais programado (base Buscapé).</p></div>
+    <div class="card map-card">
+      <div class="map-tools">
+        <div class="seg" id="mapColor"><button data-v="status" class="on">Cor por último status</button><button data-v="parc">Cor por parceira</button></div>
+        <div class="legend" id="mapLegend"></div>
+      </div>
+      <div id="map"></div>
+    </div>
+  </section>
+
+  <section id="analises" class="block">
+    <div class="sec-head"><h2>Análises</h2><p>Clique em uma barra para filtrar.</p></div>
+    <div class="grid2">
+      <div class="card chart"><h3>Evolução mensal das programações</h3><div class="cv"><canvas id="chMes"></canvas></div></div>
+      <div class="card chart"><h3>Resultado por parceira</h3><div class="cv"><canvas id="chParc"></canvas></div></div>
+      <div class="card chart"><h3>Programações por status</h3><div class="cv"><canvas id="chStatus"></canvas></div></div>
+      <div class="card chart"><h3>Cancelamentos e parciais — agrupamento do motivo (FCU)</h3><div class="cv"><canvas id="chMotivo"></canvas></div></div>
+      <div class="card chart"><h3>Tipo de intervenção</h3><div class="cv"><canvas id="chTipo"></canvas></div></div>
+      <div class="card chart"><h3>Projetos por família (FCU) — top 10</h3><div class="cv"><canvas id="chFam"></canvas></div></div>
+    </div>
+  </section>
+
+  <section id="lista" class="block">
+    <div class="sec-head"><h2>Lista de projetos</h2><p>Clique no projeto para abrir o histórico completo e a localização.</p></div>
+    <div class="card">
+      <div class="tbl-tools">
+        <div class="seg" id="tblMode"><button data-v="proj" class="on">Projetos</button><button data-v="prog">Programações</button><button data-v="fcu">Registros FCU</button></div>
+        <input id="tQ" type="search" placeholder="Buscar nesta lista…">
+        <span class="grow"></span>
+        <span class="muted" id="tCount"></span>
+        <select id="tSize"><option>25</option><option selected>50</option><option>100</option></select>
+        <button class="btn ghost sm" id="btnExportTbl">⬇ Exportar esta lista</button>
+      </div>
+      <div class="tbl-wrap"><table class="tbl" id="tbl"><thead></thead><tbody></tbody></table></div>
+      <div class="pager" id="pager"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div><img src="assets/enel-brasil-logo.png" alt="Enel Brasil"></div>
+  <div id="footMeta" class="muted"></div>
+  <div class="muted">Gestão de Programação · Enel Brasil – Grids</div>
+</footer>
+
+<!-- Modal genérico -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <button class="x" id="modalX" aria-label="Fechar">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<input type="file" id="fileIn" accept=".xlsx,.xls,.csv" multiple hidden>
+<div class="toast" id="toast" hidden></div>
+<div class="loading" id="loading"><div class="spin"></div><span>Carregando base…</span></div>
+</body>
+</html>
