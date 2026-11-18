@@ -148,3 +148,17 @@ h4{margin:16px 0 8px;font-size:14px}
 .mc div{background:#0b4fa8;color:#fff;border-radius:50%;width:30px;height:30px;margin:5px;display:flex;align-items:center;justify-content:center;font:700 12px/1 inherit;font-family:inherit;box-shadow:0 0 0 2px #fff}
 .mc.m div{background:#093f87;width:36px;height:36px;margin:5px}
 .mc.l div{background:#0f1f3d;width:42px;height:42px;margin:5px}
+
+.ptabs{margin:4px 0 12px;flex-wrap:wrap}
+.ptabs button{padding:8px 14px;font-size:13px}
+.hist th.sg,.hist td.sg{background:#f4f8ff}
+.hist th.fc,.hist td.fc{background:#fff8f2}
+.hist th.sg{background:#e8f0fb;color:#0b4fa8}.hist th.fc{background:#fdeee2;color:#a64511}
+.hist td.dcell{background:#fff;border-right:1px solid var(--line);white-space:nowrap}
+.nw{white-space:nowrap}
+.cmt{background:#fff8e6;border-left:3px solid #fab219;padding:6px 10px;border-radius:6px;margin:4px 0;font-size:13px}
+.eqlist{max-height:340px;overflow:auto;margin:0}
+.timeline{max-height:480px}
+.hist td.fc:nth-last-child(-n+2){min-width:220px}
+.hist td.sg:nth-child(5){min-width:180px}
+.hist{min-width:1250px}

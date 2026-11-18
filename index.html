@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Projetos FCU · SIGEO Executados | Enel Brasil</title>
+<title>Projetos FCU · SIGEO · SAP | Enel Brasil</title>
 <meta name="description" content="Programações, histórico e localização dos projetos das parceiras Start, Conecta e Engelmig — Enel Brasil Grids · Gestão de Programação">
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="assets/enel-brasil-logo.png">
@@ -26,7 +26,7 @@
     <div class="title">
       <span class="eyebrow">Enel Brasil · Grids · Gestão de Programação</span>
       <h1>Projetos FCU · SIGEO Executados</h1>
-      <span class="sub">Start Engenharia · Conecta · Engelmig — programações, histórico e localização</span>
+      <span class="sub">Start Engenharia · Conecta · Engelmig — histórico SIGEO, FCU e SAP com localização</span>
     </div>
     <div class="clock" aria-live="off">
       <div class="clock-time" id="clockTime">--:--:--</div>
@@ -49,7 +49,7 @@
 <main>
   <section id="inicio" class="block">
     <div class="filters card" id="filters">
-      <div class="f wide"><label>Pesquisa</label><input id="fQ" type="search" placeholder="Projeto, PowerON, equipamento, circuito, descrição…"></div>
+      <div class="f wide"><label>Pesquisa</label><input id="fQ" type="search" placeholder="Projeto, PowerON, equipamento, local de instalação, circuito, descrição…"></div>
       <div class="f"><label>Parceira</label><select id="fParc"></select></div>
       <div class="f"><label>Contratada</label><select id="fContr"></select></div>
       <div class="f"><label>Status programação</label><select id="fStatus"></select></div>
@@ -89,16 +89,16 @@
       <div class="card chart"><h3>Resultado por parceira</h3><div class="cv"><canvas id="chParc"></canvas></div></div>
       <div class="card chart"><h3>Programações por status</h3><div class="cv"><canvas id="chStatus"></canvas></div></div>
       <div class="card chart"><h3>Cancelamentos e parciais — agrupamento do motivo (FCU)</h3><div class="cv"><canvas id="chMotivo"></canvas></div></div>
-      <div class="card chart"><h3>Tipo de intervenção</h3><div class="cv"><canvas id="chTipo"></canvas></div></div>
+      <div class="card chart"><h3>Status SAP dos projetos (Planilha FCU SAP)</h3><div class="cv"><canvas id="chTipo"></canvas></div></div>
       <div class="card chart"><h3>Projetos por família (FCU) — top 10</h3><div class="cv"><canvas id="chFam"></canvas></div></div>
     </div>
   </section>
 
   <section id="lista" class="block">
-    <div class="sec-head"><h2>Lista de projetos</h2><p>Clique no projeto para abrir o histórico completo e a localização.</p></div>
+    <div class="sec-head"><h2>Lista de projetos</h2><p>Clique no projeto para abrir o histórico SIGEO × FCU (início e término), ocorrências e comentários, histórico SAP e a localização de todos os equipamentos.</p></div>
     <div class="card">
       <div class="tbl-tools">
-        <div class="seg" id="tblMode"><button data-v="proj" class="on">Projetos</button><button data-v="prog">Programações</button><button data-v="fcu">Registros FCU</button></div>
+        <div class="seg" id="tblMode"><button data-v="proj" class="on">Projetos</button><button data-v="prog">Programações</button><button data-v="fcu">Registros FCU</button><button data-v="occ">Ocorrências e comentários</button><button data-v="sap">Histórico SAP</button></div>
         <input id="tQ" type="search" placeholder="Buscar nesta lista…">
         <span class="grow"></span>
         <span class="muted" id="tCount"></span>
