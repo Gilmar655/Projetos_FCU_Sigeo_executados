@@ -415,9 +415,9 @@ function openProject(code) {
   const fcuOnly = p.progs.every(r => r.fo === 'FCU');
   const hrows = H.map(h => { const n = Math.max(h.s.length, h.f.length, 1); let out = ''; for (let k = 0; k < n; k++) { const a = h.s[k], b = h.f[k];
     out += `<tr>${k === 0 ? `<td rowspan="${n}" class="dcell"><b>${fmtD(h.d) || '—'}</b></td>` : ''}
-    <td class="sg">${a ? badge(a.st) : '<span class="muted">sem SIGEO</span>'}</td><td class="sg nw">${a ? fmtDT(a.ini) : ''}</td><td class="sg nw">${a ? fmtDT(a.fim) : ''}</td><td class="sg muted">${a ? esc([a.tp, a.po && 'PO ' + a.po, a.eq].filter(Boolean).join(' · ')) : ''}</td>
+    <td class="sg">${a ? badge(a.st) : '<span class="muted">sem SIGEO</span>'}</td><td class="sg nw">${a ? fmtDT(a.ini) : ''}</td><td class="sg nw">${a ? fmtDT(a.fim) : ''}</td><td class="sg muted"><div class="wcell s">${a ? esc([a.tp, a.po && 'PO ' + a.po, a.eq].filter(Boolean).join(' · ')) : ''}</div></td>
     <td class="fc">${b ? badge(b[FX.Status_Sigeo]) : '<span class="muted">sem FCU</span>'}</td><td class="fc nw">${b ? fmtDT(b[FX.Inicio]) : ''}</td><td class="fc nw">${b ? fmtDT(b[FX.Termino]) : ''}</td>
-    <td class="fc">${b ? esc([b[FX.motivo_canc_exec_parcial], b[FX.Agrupamento]].filter(Boolean).join(' · ')) : ''}</td><td class="fc">${b ? esc(b[FX.Comentario]) : ''}</td></tr>`; } return out; }).join('');
+    <td class="fc"><div class="wcell">${b ? esc([b[FX.motivo_canc_exec_parcial], b[FX.Agrupamento]].filter(Boolean).join(' · ')) : ''}</div></td><td class="fc"><div class="wcell">${b ? esc(b[FX.Comentario]) : ''}</div></td></tr>`; } return out; }).join('');
   const sapDates = s ? [['Data de Energização', s['Data de Energização']], ['Data Conclusão (total) de Obra', s['Data Conclusão (total) de Obra']], ['Data Inventário (Executor)', s['Data Inventário (Executor)']], ['Data Conciliação de Inventário', s['Data Conciliação de Inventário']]].filter(x => x[1]).sort((a, b) => a[1].localeCompare(b[1])) : [];
   openModal(`
   <div class="mh"><h2>${esc(p.code)}</h2>${pchip(p.pa)} ${badge(p.lastSt)}${p.sapSt ? `<span class="badge" style="--c:#6250d6">SAP ${esc(p.sapSt)}</span>` : ''}<span class="muted">${esc(p.ct)}</span></div>

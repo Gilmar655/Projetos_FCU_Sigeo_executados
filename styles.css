@@ -159,6 +159,5 @@ h4{margin:16px 0 8px;font-size:14px}
 .cmt{background:#fff8e6;border-left:3px solid #fab219;padding:6px 10px;border-radius:6px;margin:4px 0;font-size:13px}
 .eqlist{max-height:340px;overflow:auto;margin:0}
 .timeline{max-height:480px}
-.hist td.fc:nth-last-child(-n+2){min-width:220px}
-.hist td.sg:nth-child(5){min-width:180px}
-.hist{min-width:1250px}
+.wcell{min-width:240px;max-width:420px;white-space:normal}
+.wcell.s{min-width:170px}
